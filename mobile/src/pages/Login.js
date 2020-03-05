@@ -1,15 +1,41 @@
-import React from 'react';
-import { StyleSheet, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
 
 import logo from '../assets/logo.png';
+import api from '../services/api';
 
-export default function Login() {
+export default function Login({ navigation }) {
+
+    const [user, setUser] = useState('');
+
+    useEffect(() => {
+        AsyncStorage.getItem('user').then(user => {
+            if (user) {
+                navigation.navigate('Main', { _id });
+            }
+        });
+    }, []);
+
+    async function handleLogin() {
+        const response = await api.post('devs', { username: user });
+
+        const { _id } = response.data;
+
+        await AsyncStorage.setItem('user', _id);
+
+        navigation.navigate('Main', { user: _id });
+    }
+
     return (
-        <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <View style={styles.container}>
             <Image source={logo} />
-            <TextInput style={styles.input} placeholder="Enter your gitub user" />
-            <TouchableOpacity style={styles.button}><Text style={styles.buttonText}>Enter</Text></TouchableOpacity>
-        </KeyboardAvoidingView>
+            <TextInput style={styles.input}
+                placeholder="Enter your gitub user"
+                value={user}
+                onChangeText={setUser}
+            />
+            <TouchableOpacity style={styles.button} onPress={handleLogin}><Text style={styles.buttonText}>Enter</Text></TouchableOpacity>
+        </View>
     );
 }
 
@@ -30,7 +56,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginTop: 20
     },
-    button:{
+    button: {
         height: 45,
         alignSelf: 'stretch',
         backgroundColor: '#DF4723',
@@ -39,7 +65,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 20
     },
-    buttonText:{
+    buttonText: {
         color: 'white'
     }
 });

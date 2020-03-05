@@ -6,7 +6,7 @@ module.exports = {
     async store(req, res) {
         const { username } = req.body;
 
-        const userExists = await Dev.findOne({ user: username });
+        const userExists = await Dev.findOne({ user: username.toLowerCase() });
 
         if (userExists) {
             return res.json(userExists);
@@ -18,7 +18,7 @@ module.exports = {
 
             const dev = await Dev.create({
                 name,
-                user: username,
+                user: username.toLowerCase(),
                 bio,
                 avatar
             });
