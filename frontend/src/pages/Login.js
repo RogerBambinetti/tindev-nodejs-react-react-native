@@ -18,7 +18,7 @@ export default function Login({history}) {
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>
-                <img src={logo} alt="logo" />
+                <img className="logo" src={logo} alt="logo" />
                 <input placeholder="Enter your Github username"
                     value={username}
                     onChange={e => setusername(e.target.value)}

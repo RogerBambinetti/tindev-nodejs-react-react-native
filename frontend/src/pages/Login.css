@@ -15,8 +15,8 @@
 .container form input {
     margin-top: 20px;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    height: 45px;
+    border-radius: 25px;
+    height: 50px;
     padding: 0 20px;
     font-size: 15px;
     color: #666;
@@ -25,9 +25,15 @@
 .container form button {
     margin-top: 10px;
     border: 0;
-    border-radius: 5px;
-    height: 45px;
+    border-radius: 25px;
+    height: 50px;
     font-size: 15px;
-    background-color: #DF4723;
+    background-color: #F25C5C;
     color: white;
+}
+
+.container form .logo{
+    width: 98px;
+    height: 32px;
+    align-self: center;
 }

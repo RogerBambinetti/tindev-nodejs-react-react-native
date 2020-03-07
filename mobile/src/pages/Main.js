@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, AsyncStorage, Animated } from 'react-native';
+import { PanGestureHandler, State } from 'react-native-gesture-handler';
 
 import logo from '../assets/logo.png';
 import like from '../assets/like.png';
@@ -26,7 +27,7 @@ export default function Main({ navigation }) {
         setUsers(rest);
     }
 
-    async function handleDislike(id) {
+    async function handleDislike() {
         const [user, ...rest] = users;
         await api.post(`/devs/${user._id}/dislikes`, null, { headers: { user: id } });
         setUsers(rest);
@@ -37,32 +38,70 @@ export default function Main({ navigation }) {
         navigation.navigate('Login');
     }
 
+    //Animation
+
+    const translateX = new Animated.Value(0);
+
+    let offsetX = 0;
+
+    const animatedEvent = Animated.event([
+        {
+            nativeEvent: {
+                translationX: translateX
+            }
+        }
+    ]);
+
+    function onHandlerStateChanged(event) {
+        if (event.nativeEvent.oldState === State.ACTIVE) {
+            const { translationX } = event.nativeEvent;
+            offsetX = translationX;
+            if (offsetX > 0) {
+                handleLike();
+            } else {
+                handleDislike();
+            }
+
+            Animated.timing(translateX, { toValue: 0, duration: 100 }).start();
+
+        }
+    }
+
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={handleLogout} ><Image style={styles.logo} source={logo} /></TouchableOpacity>
-            <View style={styles.cardsContainer}>
-                {users.length === 0 ?
-                    <Text style={styles.empty}>Empty :(</Text>
-                    : (
-                        users.map((user, index) => (
-                            <View key={user._id} style={[styles.card, { zIndex: users.length - index }]}>
-                                <Image style={styles.avatar} source={{ uri: user.avatar }} />
-                                <View style={styles.footer}>
-                                    <Text style={styles.name}>{user.name}</Text>
-                                    <Text style={styles.bio}>{user.bio}</Text>
-                                </View>
-                            </View>
-                        ))
+            <PanGestureHandler
+                onGestureEvent={animatedEvent}
+                onHandlerStateChange={onHandlerStateChanged}
+            >
+                <View style={styles.cardsContainer}>
+                    {users.length === 0 ?
+                        <Text style={styles.empty}>Empty :(</Text>
+                        : (
+                            users.map((user, index) => (
+                                <Animated.View key={user._id} style={[styles.card, { zIndex: users.length - index, transform: [{ translateX }] }]}>
+                                    <Image style={styles.avatar} source={{ uri: user.avatar }} />
+                                    <View style={styles.footer}>
+                                        <Text style={styles.name}>{user.name}</Text>
+                                        <Text style={styles.bio}>{user.bio}</Text>
+                                    </View>
+                                </Animated.View>
+                            ))
 
-                    )}
-            </View>
+                        )}
+                </View>
+            </PanGestureHandler>
             <View style={styles.buttonsContainer}>
-                <TouchableOpacity style={styles.button} onPress={handleDislike}>
-                    <Image source={dislike} />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={handleLike}>
-                    <Image source={like} />
-                </TouchableOpacity>
+                {users.length > 0 && (
+                    <>
+                        <TouchableOpacity style={styles.button} onPress={handleDislike}>
+                            <Image source={dislike} />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={handleLike}>
+                            <Image source={like} />
+                        </TouchableOpacity>
+                    </>
+                )}
             </View>
         </View>
     );
@@ -79,7 +118,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#f5f5f5',
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: 40
