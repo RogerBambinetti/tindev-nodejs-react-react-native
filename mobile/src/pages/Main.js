@@ -56,13 +56,13 @@ export default function Main({ navigation }) {
         if (event.nativeEvent.oldState === State.ACTIVE) {
             const { translationX } = event.nativeEvent;
             offsetX = translationX;
-            if (offsetX > 0) {
+            if (offsetX > 170) {
                 handleLike();
-            } else {
+            } else if (offsetX < -170) {
                 handleDislike();
+            } else {
+                Animated.timing(translateX, { toValue: 0, duration: 100 }).start();
             }
-
-            Animated.timing(translateX, { toValue: 0, duration: 100 }).start();
 
         }
     }
@@ -79,7 +79,7 @@ export default function Main({ navigation }) {
                         <Text style={styles.empty}>Empty :(</Text>
                         : (
                             users.map((user, index) => (
-                                <Animated.View key={user._id} style={[styles.card, { zIndex: users.length - index, transform: [{ translateX }] }]}>
+                                <Animated.View key={user._id} style={[styles.card, { zIndex: users.length - index }, index === 0 && { transform: [{ translateX }] }]}>
                                     <Image style={styles.avatar} source={{ uri: user.avatar }} />
                                     <View style={styles.footer}>
                                         <Text style={styles.name}>{user.name}</Text>
@@ -103,7 +103,7 @@ export default function Main({ navigation }) {
                     </>
                 )}
             </View>
-        </View>
+        </View >
     );
 }
 
