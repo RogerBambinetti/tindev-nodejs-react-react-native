@@ -79,7 +79,7 @@ export default function Main({ navigation }) {
                         <Text style={styles.empty}>Empty :(</Text>
                         : (
                             users.map((user, index) => (
-                                <Animated.View key={user._id} style={[styles.card, { zIndex: users.length - index }, index === 0 && { transform: [{ translateX }] }]}>
+                                <Animated.View key={user._id} style={[styles.card, { zIndex: users.length - index }, index === 0 && { transform: [{ translateX },{ rotate: translateX.interpolate({inputRange:[-170,170],outputRange:[-0.1,0.1],extrapolate: 'clamp'}) }] }]}>
                                     <Image style={styles.avatar} source={{ uri: user.avatar }} />
                                     <View style={styles.footer}>
                                         <Text style={styles.name}>{user.name}</Text>
