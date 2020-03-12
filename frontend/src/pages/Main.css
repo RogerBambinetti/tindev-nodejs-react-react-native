@@ -1,3 +1,47 @@
+.match-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.85);
+}
+
+.match-container .avatar{
+    width: 150px;
+    height: 150px;
+    border-radius: 75px;
+    border: 5px solid #fff;
+    margin: 30px 0;
+}
+
+.match-container strong{
+    color: #fff;
+    font-size: 32px;
+}
+
+.match-container p{
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 20px;
+    line-height: 30px;
+    max-width: 400px;
+}
+
+.match-container button{
+    margin-top: 10px;
+    border: 0;
+    border-radius: 25px;
+    width: 30%;
+    height: 50px;
+    font-size: 15px;
+    background-color: #F25C5C;
+    color: white;
+}
+
 .container {
     max-width: 980px;
     margin: 0 auto;
@@ -44,11 +88,11 @@
 .container ul li .buttons {
     margin-top: 5px;
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-gap: 5px;
 }
 
-.container ul li .buttons button{
+.container ul li .buttons button {
     height: 50px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05);
     border: 0;
@@ -57,7 +101,7 @@
     cursor: pointer;
 }
 
-.container .empty{
+.container .empty {
     font-size: 35px;
     font-weight: bold;
     color: #333;

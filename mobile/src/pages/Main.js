@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, AsyncStorage, Animated } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
+import io from 'socket.io-client';
 
 import logo from '../assets/logo.png';
 import like from '../assets/like.png';
 import dislike from '../assets/dislike.png';
+import itsamatch from '../assets/itsamatch.png';
 import api from '../services/api';
 
 export default function Main({ navigation }) {
     const id = navigation.getParam('user');
 
     const [users, setUsers] = useState([]);
+    const [matchDev, setMatchDev] = useState(false);
 
     useEffect(() => {
         async function loadUsers() {
@@ -19,6 +22,13 @@ export default function Main({ navigation }) {
         }
 
         loadUsers();
+    }, [id]);
+
+    useEffect(() => {
+        const socket = io('http://192.168.0.132:3333', { query: { user: id } });
+        socket.on('match', dev => {
+            setMatchDev(dev);
+        });
     }, [id]);
 
     async function handleLike() {
@@ -79,7 +89,7 @@ export default function Main({ navigation }) {
                         <Text style={styles.empty}>Empty :(</Text>
                         : (
                             users.map((user, index) => (
-                                <Animated.View key={user._id} style={[styles.card, { zIndex: users.length - index }, index === 0 && { transform: [{ translateX },{ rotate: translateX.interpolate({inputRange:[-170,170],outputRange:[-0.1,0.1],extrapolate: 'clamp'}) }] }]}>
+                                <Animated.View key={user._id} style={[styles.card, { zIndex: users.length - index }, index === 0 && { transform: [{ translateX }, { rotate: translateX.interpolate({ inputRange: [-170, 170], outputRange: [-0.2, 0.2], extrapolate: 'clamp' }) }] }]}>
                                     <Image style={styles.avatar} source={{ uri: user.avatar }} />
                                     <View style={styles.footer}>
                                         <Text style={styles.name}>{user.name}</Text>
@@ -103,6 +113,18 @@ export default function Main({ navigation }) {
                     </>
                 )}
             </View>
+
+            {matchDev && (
+                <View style={styles.matchContainer}>
+                    <Image source={itsamatch} />
+                    <Image style={styles.matchAvatar} source={{ uri: matchDev.avatar }} />
+                    <Text style={styles.matchName}>{matchDev.name}</Text>
+                    <Text style={styles.matchBio}>{matchDev.bio}</Text>
+                    <TouchableOpacity style={styles.closeButton}>
+                        <Text style={styles.buttonText}>Close</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
         </View >
     );
 }
@@ -122,6 +144,43 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: 40
+    },
+    matchContainer: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0,0,0,0.85)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 40
+    },
+    matchAvatar: {
+        width: 150,
+        height: 150,
+        borderRadius: 75,
+        marginVertical: 25,
+        borderColor: '#fff',
+        borderWidth: 1.5
+    },
+    matchName: {
+        color: '#fff',
+        fontSize: 25
+    },
+    matchBio: {
+        color: 'rgba(255,255,255,0.8)',
+        fontSize: 15
+    },
+    closeButton: {
+        height: 50,
+        alignSelf: 'stretch',
+        borderRadius: 25,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 20,
+        borderWidth: 1.5,
+        borderColor: '#FFF',
+    },
+    buttonText: {
+        color: '#FFF',
+        fontWeight: 'bold'
     },
     cardsContainer: {
         flex: 1,
