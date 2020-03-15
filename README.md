@@ -18,7 +18,7 @@
 
 ## Visão geral
 
-**Este projeto, embasado em videoaulas disponibilizadas pela [RocketSeat](https://github.com/Rocketseat), foi desenvolvido para fins de aprendizagem.** 4 telas estão disponíveis, divididas entre o sistema web e mobile.
+**Este projeto, embasado em videoaulas disponibilizadas pela [RocketSeat](https://github.com/Rocketseat), foi desenvolvido para fins de aprendizagem.** 4 telas estão disponíveis, divididas entre o sistema web e mobile
 
 
 ## Telas
