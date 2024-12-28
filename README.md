@@ -2,16 +2,16 @@
 <h1 align="center">
 <img
 		width="200"
-		src="https://github.com/RogerBambinetti/tindev-nodejs-reactjs-react-native/blob/master/preview/logo.png">
+		src="https://github.com/RogerBambinetti/tindev-nodejs-react-react-native/blob/master/preview/logo.png">
 </h1>
 <h3 align="center">
-	Tindev - NodeJS - ReactJS - React Native
+	Tindev - NodeJS - React - React Native
 </h3>
 
 <p align="center">
 <img
 		width="700"
-		src="https://github.com/RogerBambinetti/tindev-nodejs-reactjs-react-native/blob/master/preview/Screenshot0.png">
+		src="https://github.com/RogerBambinetti/tindev-nodejs-react-react-native/blob/master/preview/Screenshot0.png">
 </p>
 
 ## Visão geral
@@ -25,13 +25,13 @@ O projeto possui uma versão mobile, mas o layout responsivo da aplicação web 
 <p align="center">
 <img
 		width="350"
-		src="https://github.com/RogerBambinetti/tindev-nodejs-reactjs-react-native/blob/master/preview/Screenshot3.png">
+		src="https://github.com/RogerBambinetti/tindev-nodejs-react-react-native/blob/master/preview/Screenshot3.png">
 <img
 		width="350"
-		src="https://github.com/RogerBambinetti/tindev-nodejs-reactjs-react-native/blob/master/preview/Screenshot1.png">
+		src="https://github.com/RogerBambinetti/tindev-nodejs-react-react-native/blob/master/preview/Screenshot1.png">
 <img
 		width="350"
-		src="https://github.com/RogerBambinetti/tindev-nodejs-reactjs-react-native/blob/master/preview/Screenshot2.png">
+		src="https://github.com/RogerBambinetti/tindev-nodejs-react-react-native/blob/master/preview/Screenshot2.png">
 </p>
 
 ## Contribuidores
