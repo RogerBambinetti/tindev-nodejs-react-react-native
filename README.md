@@ -48,8 +48,8 @@ The layout is responsive and adapts well to both mobile and desktop devices.
 
 <p align="center">
 <img
-		width="200"
-		src="https://github.com/RogerBambinetti/tindev-nodejs-react-react-native/blob/master/preview/logo.png">
+		width="350"
+		src="https://github.com/RogerBambinetti/tindev-nodejs-react-react-native/blob/master/preview/Screenshot0.png">
 </p>
 <p align="center">
 <img
